@@ -29,6 +29,7 @@ async function getApprovedPosts(category) {
   };
   const response = await fetch(urlPosts, reqOptions);
   const results = await response.json();
+  console.log(results);
   var data = results.data;
   var count = 0;
   if (data) {

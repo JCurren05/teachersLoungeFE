@@ -20,6 +20,7 @@ async function login({ navigation }, email, password) {
     if (response.status != 200) {
       Alert.alert("Login Error: ", data.message);
     } else {
+      console.log(data);
       if (data.user != null) {
         let user = new User(
           data.user.Email,
@@ -30,9 +31,11 @@ async function login({ navigation }, email, password) {
         );
 
         try {
+          console.log(user);
           // Store token in secure store
           await SecureStore.setItemAsync("token", data.token);
-          if (user.userRole == "Approved" || user.userRole == "Admin"){
+          //user role assignments
+          if (user.userRole == "Approved" || user.userRole == "Admin" || user.userRole == "Guest"){
             navigation.navigate("User", { User: user });
           }else {
             //Only approved users can login
