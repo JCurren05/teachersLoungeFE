@@ -23,11 +23,11 @@ const searchUser = async (searchQuery) => {
     while (data[count] != undefined) {
       users.unshift(
         new Friend(
-          data[count].Email,
-          data[count].FirstName,
-          data[count].LastName,
-          data[count].SchoolID,
-          data[count].Role
+          data[count].email,
+          data[count].firstname,
+          data[count].lastname,
+          data[count].schoolid,
+          data[count].role
         )
       );
       count += 1;
