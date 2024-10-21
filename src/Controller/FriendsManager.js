@@ -12,7 +12,7 @@ import { Alert } from "react-native";
 
 // Use userEmail to get user info
 async function getUserInfo(userEmail) {
-  console.log(userEmail);
+  console.log('This is the user email' + userEmail);
   if (userEmail != "") {
     try {
       let userInfoUrl = `${apiUrl}${getUserInfoRoute}?userEmail=${userEmail}`;
@@ -27,17 +27,21 @@ async function getUserInfo(userEmail) {
       const response = await fetch(userInfoUrl, reqOptions);
       const results = await response.json();
       var data = results.data;
-      console.log(data);
+      console.log("------This is the data --------");
+      console.log(data[0]);
       var friend;
       if (data[0]) {
         friend = new Friend(
-          data[0].Email,
-          data[0].FirstName,
-          data[0].LastName,
-          data[0].SchoolID,
-          data[0].Role
+          data[0].email,
+          data[0].firstname,
+          data[0].lastname,
+          data[0].schoolid,
+          data[0].role
         );
       }
+      console.log("------This is the friend --------");
+      console.log(friend);
+      console.log("------This is the friend --------");
       return friend;
     } catch (error) {
       console.error("ERROR in getUserInfo", error.message);
@@ -69,7 +73,11 @@ async function checkIfFriended(frienderEmail, friendeeEmail) {
 }
 
 async function friendUser({ navigation }, frienderEmail, friendeeEmail) {
+  console.log('-------------');
+  console.log(friendeeEmail);
+  console.log(frienderEmail);
   if (friendeeEmail && frienderEmail) {
+
     let friendUserUrl = apiUrl + friendUserRoute;
     console.log(friendUserUrl);
     const reqOptions = {
