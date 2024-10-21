@@ -12,9 +12,9 @@ import OpenEducationalResourcesCommand from "../../../Controller/OpenEducational
 import App_StyleSheet from "../../../Styles/App_StyleSheet";
 
 function EducationalResourcesView({ navigation }) {
-  const ERView1 = "Pre-K And Elementary";
-  const ERView2 = "Middle And High School";
-  const ERView3 = "Adult Learning And Higher Education";
+  const ERView1 = "Pre-K & Elementary";
+  const ERView2 = "Middle & High School";
+  const ERView3 = "Adult Learning\n& Higher Education";
   const route = useRoute();
 
   const a = new OpenEducationalResourcesCommand(route.params.User);

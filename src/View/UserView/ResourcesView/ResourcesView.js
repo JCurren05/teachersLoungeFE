@@ -78,6 +78,7 @@ const ResourcesImage = StyleSheet.create({justifyContent: "center",
 alignContent: "center",
 alignItems: "center",
 width: 70,
-height: 70,})
+height: 70,
+marginTop: 5,})
 export default ResourcesView;
 

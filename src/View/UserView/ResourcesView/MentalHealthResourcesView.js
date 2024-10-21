@@ -1,32 +1,39 @@
 import React from "react";
-import { StyleSheet, Text, View, Linking } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Linking,
+} from "react-native";
 import { useRoute } from "@react-navigation/native";
-import { FlatList } from "react-native-gesture-handler";
-
-import { createStackNavigator } from "@react-navigation/stack";
 import SafeArea from "../../SafeArea";
-import Resources from "../../../Model/Resources";
+import OpenMentalHealthResourcesCommand from "../../../Controller/OpenMentalHealthResourcesCommand";
 import App_StyleSheet from "../../../Styles/App_StyleSheet";
 
 function MentalHealthResourcesView({ navigation }) {
-  const a = new Resources();
+  const MHRView1 = "Mental Health First Aid";
+  const MHRView2 = "Suicide & Crisis Lifeline";
+  const route = useRoute();
+
+  const a = new OpenMentalHealthResourcesCommand(route.params.User);
 
   return (
     <SafeArea>
-      <View style={App_StyleSheet.listings}>
-        <FlatList
-          data={a.sources4}
-          renderItem={({ item }) => (
-            <View style={App_StyleSheet.resource_post}>
-              <Text
-                style={App_StyleSheet.text}
-                onPress={() => Linking.openURL(item.link)}
-              >
-                {item.sourceName}
-              </Text>
-            </View>
-          )}
-        />
+      <View style = {App_StyleSheet.resource_backGround}>
+          <TouchableOpacity 
+            style={App_StyleSheet.resource_button}
+            onPress={() => Linking.openURL("https://www.mentalhealthfirstaid.org/mental-health-resources/")}
+          >
+            <Text style={App_StyleSheet.resource_cardTitle}>{MHRView1}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={App_StyleSheet.resource_button}
+            onPress={() => Linking.openURL("https://988lifeline.org/")}
+          >
+            <Text style={App_StyleSheet.resource_cardTitle}>{MHRView2}</Text>
+          </TouchableOpacity>
       </View>
     </SafeArea>
   );

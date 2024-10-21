@@ -6,7 +6,6 @@ class Resources {
   sources1 = [];
   sources2 = [];
   sources3 = [];
-  sources4 = [];
 
   constructor(id) {
     this.sources1 = [
@@ -16,7 +15,7 @@ class Resources {
       ),
       new Link("Starfall", "https://www.starfall.com/h/"),
       new Link("PBS Kids", "https://pbskids.org"),
-      new Link("Nick Jr. ", "https://www.educationalappstore.com/app/nick-jr"),
+      new Link("Nick Jr.", "https://www.educationalappstore.com/app/nick-jr"),
       new Link("Funbrain", "https://www.funbrain.com"),
       new Link("Sesame Street", "https://www.sesamestreet.org/"),
       new Link("Reading Eggs", "https://readingeggsjunior.com"),
@@ -39,11 +38,6 @@ class Resources {
       new Link("OER Commons", "https://www.oercommons.org/"),
       new Link("OpenStax", "https://openstax.org/"),
       new Link("Merlot", "https://merlot.org/merlot/"),
-    ];
-
-    this.sources4 = [
-      new Link("Mental Health First Aid", "https://www.mentalhealthfirstaid.org/mental-health-resources/"),
-      new Link("Suicide & Crisis Lifeline", "https://988lifeline.org/"),
     ];
   }
 }
