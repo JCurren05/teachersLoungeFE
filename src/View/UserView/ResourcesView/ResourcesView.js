@@ -10,6 +10,7 @@ import {
 import { Link, useRoute } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import SafeArea from "../../SafeArea";
+import OpenMentalHealthResourcesCommand from "../../../Controller/OpenMentalHealthResourcesCommand";
 import OpenEducationalResourcesCommand from "../../../Controller/OpenEducationalResourcesCommand";
 import App_StyleSheet from "../../../Styles/App_StyleSheet";
 
@@ -17,7 +18,9 @@ const HomeStack = createStackNavigator();
 
 function ResourcesView({ navigation }) {
   const route = useRoute();
-  const a = new OpenEducationalResourcesCommand(route.params.User);
+  const a = new OpenMentalHealthResourcesCommand(route.params.User);
+  const b = new OpenEducationalResourcesCommand(route.params.User);
+  const MHRView = "Mental Health Resources";
   const ERView = "Educational Resources";
   const TLView = "Teachers' Lounge";
   let healthImg = require("../../../../assets/mentalhealth.jpg");
@@ -32,9 +35,7 @@ function ResourcesView({ navigation }) {
 
         <TouchableOpacity 
           style={App_StyleSheet.resource_button}
-          onPress={() => 
-            Linking.openURL("https://www.mentalhealthfirstaid.org/mental-health-resources/")
-          }
+          onPress={() => a.OpenResources({navigation}, MHRView)}
         > 
           <Text style={App_StyleSheet.resource_cardTitle}>{"Mental Health Resources"}</Text>
         </TouchableOpacity>
@@ -44,7 +45,7 @@ function ResourcesView({ navigation }) {
 
         <TouchableOpacity 
           style={App_StyleSheet.resource_button}
-          onPress={() => a.OpenResources({navigation}, ERView)}
+          onPress={() => b.OpenResources({navigation}, ERView)}
         >
           <Text style={App_StyleSheet.resource_cardTitle}>{"Educational Resources"}</Text>
         </TouchableOpacity>

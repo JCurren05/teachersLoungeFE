@@ -8,14 +8,14 @@ import SafeArea from "../../SafeArea";
 import Resources from "../../../Model/Resources";
 import App_StyleSheet from "../../../Styles/App_StyleSheet";
 
-function ERAdultLearningAndHigherView({ navigation }) {
+function MentalHealthResourcesView({ navigation }) {
   const a = new Resources();
 
   return (
     <SafeArea>
       <View style={App_StyleSheet.listings}>
         <FlatList
-          data={a.sources3}
+          data={a.sources4}
           renderItem={({ item }) => (
             <View style={App_StyleSheet.resource_post}>
               <Text
@@ -31,4 +31,4 @@ function ERAdultLearningAndHigherView({ navigation }) {
     </SafeArea>
   );
 }
-export default ERAdultLearningAndHigherView;
+export default MentalHealthResourcesView;

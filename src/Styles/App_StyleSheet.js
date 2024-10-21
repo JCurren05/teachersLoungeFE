@@ -229,7 +229,7 @@ const App_StyleSheet = StyleSheet.create({
     borderWidth: 0,
     alignSelf: "center",
   },
-  resournce_post: {
+  resource_post: {
     width: "100%",
     alignItems: "center",
     alignContent: "center",
