@@ -10,12 +10,12 @@ class Resources {
   constructor(id) {
     this.sources1 = [
       new Link(
-        "ABC Mouse Early Learning Academy ABCmouse.com - Online Learning for Ages 2–8",
+        "ABC Mouse",
         "https://www.abcmouse.com/abc/?8a08850bc2=T2889518156.1667458405.0759&gclid=CjwKCAjwzNOaBhAcEiwAD7Tb6KMt0o0eWo9GKTCKiAAt1IZYhC6HbVVjTmuracFlMcdH40jv0jCyXRoCwjoQAvD_BwE&utm_campaignid=716461616&utm_adgroupid=36906904226&utm_adextensionid=&utm_targetid=kwd-305381101&utm_matchtype=e&utm_network=g&utm_device=c&utm_devicemodel=&utm_creativeid=532570393343&utm_placement=&utm_adposition=&utm_geo=US&gclid=CjwKCAjwzNOaBhAcEiwAD7Tb6KMt0o0eWo9GKTCKiAAt1IZYhC6HbVVjTmuracFlMcdH40jv0jCyXRoCwjoQAvD_BwE"
       ),
       new Link("Starfall", "https://www.starfall.com/h/"),
       new Link("PBS Kids", "https://pbskids.org"),
-      new Link("Nick Jr. ", "https://www.educationalappstore.com/app/nick-jr"),
+      new Link("Nick Jr.", "https://www.educationalappstore.com/app/nick-jr"),
       new Link("Funbrain", "https://www.funbrain.com"),
       new Link("Sesame Street", "https://www.sesamestreet.org/"),
       new Link("Reading Eggs", "https://readingeggsjunior.com"),

@@ -13,10 +13,12 @@ function ERPreKAndElementaryView({ navigation }) {
   return (
     <SafeArea>
       <View style={App_StyleSheet.listings}>
+        
+        
         <FlatList
           data={a.sources1}
           renderItem={({ item }) => (
-            <View style={App_StyleSheet.resournce_post}>
+            <View style={App_StyleSheet.resource_post}>
               <Text
                 style={App_StyleSheet.text}
                 onPress={() => Linking.openURL(item.link)}
