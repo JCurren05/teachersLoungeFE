@@ -108,7 +108,6 @@ const getMessages = async (conversationId) => {
   return messages;
 };
 
-// Sends a message to a conversation
 const sendMessage = async (conversationId, message, senderEmail) => {
   let sendMessageUrl = apiUrl + sendMessageRoute;
   const reqOptions = {
@@ -128,14 +127,25 @@ const sendMessage = async (conversationId, message, senderEmail) => {
 
   try {
     response = await fetch(sendMessageUrl, reqOptions);
-    const results = await response.json();
-    return response.status == 200;
+    // Log response status and text
+    console.log('Response Status:', response.status);
+    const textResponse = await response.text(); // Get the response as text
+    console.log('Response Body:', textResponse); // Log the response body
+    
+    // Only attempt to parse as JSON if the response is OK
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const results = JSON.parse(textResponse); // Parse the text as JSON
+    return response.status === 200;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 
   return false;
 };
+
 
 const createConversation = async (senderEmail, receiverEmail) => {
   let createConversationUrl = apiUrl + createConversationRoute;
