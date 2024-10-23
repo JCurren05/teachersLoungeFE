@@ -148,11 +148,11 @@ async function getFriendsList(userEmail) {
       while (data[count] != undefined) {
         friends.unshift(
           new Friend(
-            data[count].Email,
-            data[count].FirstName,
-            data[count].LastName,
-            data[count].SchoolID,
-            data[count].Role
+            data[count].email,
+            data[count].firstname,
+            data[count].lastname,
+            data[count].schoolid,
+            data[count].role
           )
         );
         count = count + 1;
