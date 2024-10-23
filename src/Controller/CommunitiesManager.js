@@ -120,6 +120,7 @@ async function leaveCommunity({ navigation }, communityId, email) {
 }
 
 async function getUserCommunities(email) {
+  console.log("--------Community endpoint------");
   if (email != "") {
     var communities = [];
     let urlCommunities = apiUrl + userCommunitiesRoute + `?email=${email}`;
@@ -138,7 +139,7 @@ async function getUserCommunities(email) {
     if (data) {
       while (data[count] != undefined) {
         communities.unshift(
-          new Community(data[count].CommunityID, data[count].CommunityName)
+          new Community(data[count].communityid, data[count].communityname)
         );
         count = count + 1;
       }

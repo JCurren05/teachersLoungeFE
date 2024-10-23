@@ -44,8 +44,13 @@ function CommunitiesView({ navigation }) {
   };
 
   const loadCommunities = async () => {
+    console.log("----Username----")
+    console.log(route.params.User.userUserName);
+    console.log("----Username----")
     const data = await getUserCommunities(route.params.User.userUserName);
+    console.log("----Communities----")
     console.log(data);
+    console.log("----Communities End----")
     setCommunities(
       data.map((c) => {
         return { ["key"]: c.id, ["value"]: c.name };
