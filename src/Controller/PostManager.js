@@ -129,7 +129,6 @@ async function deletePost(postID, fileID) {
 
 async function addComment(content, email, time, postId) {
   let urlAddComment = apiUrl + addCommentRoute;
-  // Alert.alert("Error", "addComment: " + urlAddComment);
   const reqOptions = {
     method: "POST",
     headers: {
@@ -138,22 +137,18 @@ async function addComment(content, email, time, postId) {
     },
     body: JSON.stringify({ content: content, email: email, time: time }),
   };
-  // Alert.alert("Error", "addComment: " + reqOptions.body);
   const response = await fetch(urlAddComment, reqOptions);
   const results = await response.json();
   if (response.status == 200) {
-    // Alert.alert("Success", results.message);
     let commentId = await getComment(content, email);
-    // Alert.alert("Success", commentId);
     await addCommentToPost(commentId, email, postId);
-    } else {
+  } else {
     Alert.alert("Error", results.message);
   }
 }
 
 async function addCommentToPost(commentId, email, postId) {
   let urlAddCommentToPost = apiUrl + addCommentToPostRoute;
-  // Alert.alert("Error", "addCommentToPost: " + urlAddCommentToPost);
   const reqOptions = {
     method: "POST",
     headers: {
@@ -166,11 +161,10 @@ async function addCommentToPost(commentId, email, postId) {
       postId: postId,
     }),
   };
-  // Alert.alert("Error", "addCommentToPost: " + reqOptions.body);
   const response = await fetch(urlAddCommentToPost, reqOptions);
   const results = await response.json();
   if (response.status == 200) {
-    Alert.alert("Success", "addCommentToPost Success ");
+    Alert.alert("Success", "Comment added to post");
   } else {
     Alert.alert("Error", results.message);
   }
@@ -178,7 +172,6 @@ async function addCommentToPost(commentId, email, postId) {
 
 async function getComment(content, email) {
   let urlGetComment = apiUrl + getCommentRoute;
-  // Alert.alert("Error", "getComment: " + urlGetComment);
   const reqOptions = {
     method: "POST",
     headers: {
@@ -187,87 +180,56 @@ async function getComment(content, email) {
     },
     body: JSON.stringify({ content: content, email: email }),
   };
-  // Alert.alert("Error", "getComment: " + reqOptions.body);
   const response = await fetch(urlGetComment, reqOptions);
   const results = await response.json();
-  // Alert.alert("Error", "getComment: " + response.status);
   if (response.status == 200) {
-    // Alert.alert("Success",  "getComment commentId: " + results.data[0].CommentID);
+    return results.data[0].CommentID;
   } else {
     Alert.alert("Error", results.message);
   }
-  return results.data[0].CommentID;
 }
 
 async function getCommentByCommentID(commentId) {
   let urlGetCommentByCommentID = apiUrl + getCommentByCommentIDRoute;
-  // Alert.alert("Error", "getComment: " + urlGetCommentByCommentID + " " + commentId);
   const reqOptions = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + (await SecureStore.getItemAsync("token")),
     },
-    body: JSON.stringify({ commentId: commentId}),
+    body: JSON.stringify({ commentId: commentId }),
   };
-  // Alert.alert("Error", "getComment: " + reqOptions.body);
   const response = await fetch(urlGetCommentByCommentID, reqOptions);
   const results = await response.json();
-  // Alert.alert("Error", "getComment: " + response.status);
   if (response.status == 200) {
-    // Alert.alert("Success",  "getComment commentId: " + results.data[0]);
+    return results.data[0];
   } else {
     Alert.alert("Error", results.message);
   }
-  return results.data[0];
 }
 
-async function getCommentsByPostId(postId) {
-  let comments = [];
+async function getComments(postId) {
+  if (isNaN(postId)) {
+    Alert.alert("Error", "Invalid post ID");
+    return;
+  }
+
   let urlGetCommentsByPostId = apiUrl + getCommentsByPostIdRoute + `?postId=${postId}`;
-  // let urlGetCommentsByPostId = apiUrl + getCommentsByPostIdRoute;
-  // Alert.alert("Error", "getCommentsByPostId: " + urlGetCommentsByPostId);
   const reqOptions = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + (await SecureStore.getItemAsync("token")),
     },
-    // body: JSON.stringify({ postId: postId }),
   };
   const response = await fetch(urlGetCommentsByPostId, reqOptions);
   const results = await response.json();
-  var data = results.data;
-  var count = 0;
 
   if (response.status == 200) {
-    // Alert.alert("Success",  "getCommentsByPostId Success " + results.data[0]);
+    return results.data; // Handle the comments data here
   } else {
-    Alert.alert("Error", "getCommentsByPostId Error: " + results.message);
+    Alert.alert("Error", results.message);
   }
-
-  if (data) {
-    // Alert.alert("Error", "getCommentsByPostId data: " + data);
-    while (data[count] != undefined) {
-      // Alert.alert("Error", "data[0]: " + data[count]);
-      let temComment = await getCommentByCommentID(data[count].CommentID);
-      // Alert.alert("Error", "getCommentsByPostId data: " + temComment.Email);
-      comments.push(
-        new Comment(
-          temComment.Email,
-          null,
-          temComment.Content,
-          0,
-          "",
-          "",
-          [],
-          temComment.FileUrl
-        )
-      );
-      count = count + 1;
-    }
-  }
-  return comments;
 }
 
 export {
@@ -278,6 +240,6 @@ export {
   addComment,
   addCommentToPost,
   getComment,
-  getCommentsByPostId,
+  getComments, // Replaced with getComments instead of getCommentsByPostId
   getCommentByCommentID
 };
