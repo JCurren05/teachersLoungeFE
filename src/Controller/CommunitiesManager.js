@@ -34,7 +34,7 @@ async function getAllCommunities() {
   if (data) {
     while (data[count] != undefined) {
       communities.unshift(
-        new Community(data[count].CommunityID, data[count].CommunityName)
+        new Community(data[count].communityid, data[count].communityname)
       );
       count = count + 1;
     }
