@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import ResourcesView from "./ResourcesView";
+import MentalHealthResourcesView from "./MentalHealthResourcesView";
 import EducationalResourcesView from "./EducationalResourcesView";
 import ERPreKAndElementaryView from "./ERPreKAndElementaryView";
 import ERMiddleAndHighSchoolView from "./ERMiddleAndHighSchoolView";
@@ -35,22 +36,27 @@ function ResourcesNavigator({ navigation }) {
         }}
       />
       <HomeStack.Screen
+        name="Mental Health Resources"
+        component={MentalHealthResourcesView}
+        initialParams={route.params}
+      />
+      <HomeStack.Screen
         name="Educational Resources"
         component={EducationalResourcesView}
         initialParams={route.params}
       />
       <HomeStack.Screen
-        name="Pre-K And Elementary"
+        name="Pre-K & Elementary"
         component={ERPreKAndElementaryView}
         initialParams={route.params}
       />
       <HomeStack.Screen
-        name="Middle And High School"
+        name="Middle & High School"
         component={ERMiddleAndHighSchoolView}
         initialParams={route.params}
       />
       <HomeStack.Screen
-        name="Adult Learning And Higher Education"
+        name="Adult Learning\n& Higher Education"
         component={ERAdultLearningAndHigherView}
         initialParams={route.params}
       />
