@@ -17,7 +17,7 @@ function ERAdultLearningAndHigherView({ navigation }) {
         <FlatList
           data={a.sources3}
           renderItem={({ item }) => (
-            <View style={App_StyleSheet.resournce_post}>
+            <View style={App_StyleSheet.resource_post}>
               <Text
                 style={App_StyleSheet.text}
                 onPress={() => Linking.openURL(item.link)}

@@ -19,6 +19,7 @@ function FriendsView({ navigation }) {
   useEffect(() => {
     const fetchUsers = async () => {
       const array = await getFriendsList(route.params.User.userUserName);
+      console.log(array);
       setListOfUsers(array);
     };
     fetchUsers();

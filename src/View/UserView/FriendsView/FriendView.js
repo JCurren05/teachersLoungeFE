@@ -21,7 +21,17 @@ function FriendView({ navigation }) {
   const [friended, setFriended] = useState(false);
   const [friendee, setFriendee] = useState(false);
   const loadFriend = async () => {
-    const data = await getUserInfo(route.params.FriendEmail);
+    console.log(route.params);
+    const paramsString = JSON.stringify(route.params);
+    const paramsArray = JSON.parse(paramsString);
+
+    console.log("***********")
+    console.log(paramsArray.FriendEmail);
+    const data = await getUserInfo(paramsArray.FriendEmail);
+    // console.log(route.params.User);
+    // console.log(data);
+
+    console.log(data);
     setFriend(data);
   };
   // Check if user friended
@@ -90,15 +100,15 @@ function FriendView({ navigation }) {
             onPress={() => {
               friended
                 ? unfriendUser(
-                    { navigation },
-                    route.params.User.userUserName,
-                    friend.email
-                  )
+                  { navigation },
+                  route.params.User.userUserName,
+                  friend.email
+                )
                 : friendUser(
-                    { navigation },
-                    route.params.User.userUserName,
-                    friend.email
-                  );
+                  { navigation },
+                  route.params.User.userUserName,
+                  friend.email
+                );
             }}
           >
             <Text style={App_StyleSheet.text}>

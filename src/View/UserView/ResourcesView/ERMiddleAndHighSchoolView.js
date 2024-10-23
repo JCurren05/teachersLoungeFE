@@ -16,7 +16,7 @@ function ERMiddleAndHighSchoolView({ navigation }) {
         <FlatList
           data={a.sources2}
           renderItem={({ item }) => (
-            <View style={App_StyleSheet.resournce_post}>
+            <View style={App_StyleSheet.resource_post}>
               <Text
                 style={App_StyleSheet.text}
                 onPress={() => Linking.openURL(item.link)}
