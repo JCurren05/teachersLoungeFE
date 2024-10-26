@@ -36,14 +36,14 @@ async function getApprovedPosts(category) {
     while (data[count] != undefined) {
       posts.unshift(
         new Post(
-          data[count].PostID,
-          data[count].Email,
-          data[count].Content,
+          data[count].postID,
+          data[count].email,
+          data[count].content,
           data[count].likesCount,
           "",
           "",
           [],
-          data[count].FileUrl
+          data[count].fileUrl
         )
       );
       count = count + 1;
@@ -71,14 +71,14 @@ async function getPendingPosts() {
     while (data[count] != undefined) {
       posts.unshift(
         new Post(
-          data[count].PostID,
-          data[count].Email,
-          data[count].Content,
+          data[count].postID,
+          data[count].email,
+          data[count].content,
           0,
           "",
           "",
           [],
-          data[count].FileUrl
+          data[count].fileUrl
         )
       );
       count = count + 1;
