@@ -65,7 +65,7 @@ const getLastMessage = async (conversationId) => {
     const response = await fetch(getLastMessageUrl, reqOptions);
     const results = await response.json();
     let data = results.data;
-    lastMessage = data[0]?.Content;
+    lastMessage = data[0]?.content;
   } catch (error) {
     console.log(error);
   }
@@ -94,11 +94,11 @@ const getMessages = async (conversationId) => {
 
     messages = data.map((message) => {
       return new Message(
-        message.MessageID,
-        message.ConversationID,
-        message.Content,
-        message.Sender,
-        message.Time
+        message.messageID,
+        message.conversationID,
+        message.content,
+        message.sender,
+        message.time
       );
     });
   } catch (error) {
@@ -108,10 +108,8 @@ const getMessages = async (conversationId) => {
   return messages;
 };
 
-// Sends a message to a conversation
 const sendMessage = async (conversationId, message, senderEmail) => {
   let sendMessageUrl = apiUrl + sendMessageRoute;
-
   const reqOptions = {
     method: "POST",
     headers: {
@@ -129,19 +127,31 @@ const sendMessage = async (conversationId, message, senderEmail) => {
 
   try {
     response = await fetch(sendMessageUrl, reqOptions);
-    const results = await response.json();
-    return response.status == 200;
+    // Log response status and text
+    console.log('Response Status:', response.status);
+    const textResponse = await response.text(); // Get the response as text
+    console.log('Response Body:', textResponse); // Log the response body
+    
+    // Only attempt to parse as JSON if the response is OK
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const results = JSON.parse(textResponse); // Parse the text as JSON
+    return response.status === 200;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 
   return false;
 };
 
-// Creates a new conversation
+
 const createConversation = async (senderEmail, receiverEmail) => {
   let createConversationUrl = apiUrl + createConversationRoute;
-
+  console.log(createConversationUrl);
+  console.log("JSON Parse");
+  
   const reqOptions = {
     method: "POST",
     headers: {
@@ -153,11 +163,23 @@ const createConversation = async (senderEmail, receiverEmail) => {
       receiverEmail: receiverEmail,
     }),
   };
+
   let response = null;
   try {
     response = await fetch(createConversationUrl, reqOptions);
+    
+    // Only read the response once as JSON
     const results = await response.json();
-    return response.status == 200;
+    console.log(results);
+
+    // Check if the conversation was created successfully
+    if (response.status === 200) {
+      return true;
+    } else {
+      console.log("Error: " + results.message);  // Log the message from the server
+      return false;
+    }
+
   } catch (error) {
     Alert.alert("Error", "Unable to create conversation");
     console.log(error);
@@ -165,5 +187,6 @@ const createConversation = async (senderEmail, receiverEmail) => {
 
   return false;
 };
+
 
 export { getUserConversations, getMessages, sendMessage, createConversation };
