@@ -1,49 +1,56 @@
-
 import * as DocumentPicker from 'expo-document-picker';
 import File from "../Model/File.js";
 import * as SecureStore from 'expo-secure-store';
 import { Alert } from "react-native";
-import {apiUrl,fileUploadRoute} from "@env";
+import { apiUrl, fileUploadRoute } from "@env";
 
-//Allows users to select a document then upload to s3 
-
+// Allows users to select a document and upload it to the server (now PostgreSQL-based)
 async function selectDoc() {
-  //URL for server 
-  let urlUpload = apiUrl+fileUploadRoute;
-  var result = await DocumentPicker.getDocumentAsync({});
-  if(result){
-    let uploadData = new FormData();
-    uploadData.append('file', {
-      uri: result.assets[0].uri,
-      type: result.assets[0].mimeType,
-      name: result.assets[0].name
-    });
-    const responseOfFileUpload = await fetch(urlUpload, {
-      method: 'POST',
-      headers: {
-      'Content-Type': 'multipart/form-data',
-      'Authorization': "Bearer "+ await SecureStore.getItemAsync("token")
-      },
-      body: uploadData,
-    });
-    let bucket = "";
-    let fileUrl = "";
-    if (responseOfFileUpload.status == 200) { 
-      let responseUpload = await responseOfFileUpload.json();
-      bucket = responseUpload.bucket;
-      fileUrl = responseUpload.file;
-    }else{
-      console.log("Unable to connect to server when uploading file, check that the url is correct and the the server is running...");
-      Alert.alert('Failed to upload file')
-    }     
-    //This url assumes us-east-2......
-    let publicFileUrl = "https://"+bucket+".s3.us-east-2.amazonaws.com/"+fileUrl;    
-    return new File(publicFileUrl,publicFileUrl,result.mimeType);
-  }else
-    return new File("","","");
+  // URL for server file upload endpoint
+  let urlUpload = `${apiUrl}${fileUploadRoute}`;
+  
+  try {
+    const result = await DocumentPicker.getDocumentAsync({});
+    
+    if (result && result.assets && result.assets.length > 0) {
+      let uploadData = new FormData();
+      
+      // Append file details for the upload
+      uploadData.append('file', {
+        uri: result.assets[0].uri,
+        type: result.assets[0].mimeType,
+        name: result.assets[0].name,
+      });
+
+      const response = await fetch(urlUpload, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${await SecureStore.getItemAsync("token")}`
+        },
+        body: uploadData,
+      });
+
+      if (response.status === 200) { 
+        const responseUpload = await response.json();
+        
+        // Assuming the backend now returns `filePath` for the PostgreSQL-stored file
+        const filePath = responseUpload.filePath;
+
+        return new File(filePath, result.assets[0].name, result.assets[0].mimeType);
+      } else {
+        console.log("Failed to upload file, verify server connection...");
+        Alert.alert('File Upload Failed');
+        return new File("", "", "");
+      }
+    } else {
+      return new File("", "", "");
+    }
+  } catch (error) {
+    console.error("Error during file selection/upload:", error);
+    Alert.alert("Error", "An error occurred while uploading the file");
+    return new File("", "", "");
+  }
 }
 
-
-
-
-export {selectDoc};
+export { selectDoc };
