@@ -13,6 +13,8 @@ async function selectDoc() {
     const result = await DocumentPicker.getDocumentAsync({});
     
     if (result && result.assets && result.assets.length > 0) {
+      console.log("-----------------")
+      console.log(result);
       let uploadData = new FormData();
       
       // Append file details for the upload
@@ -22,14 +24,27 @@ async function selectDoc() {
         name: result.assets[0].name,
       });
 
-      const response = await fetch(urlUpload, {
+      console.log(uploadData);
+
+      const response1 = await fetch('https://file.io', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${await SecureStore.getItemAsync("token")}`
-        },
         body: uploadData,
       });
+
+      const data = await response1.json();
+      if (data.success) {
+        console.log("File uploaded successfully. Access it here:", data.link);
+        const response = await fetch(urlUpload, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${await SecureStore.getItemAsync("token")}`
+          },
+          body: result,
+        });
+      } else {
+        console.error("File upload failed:", data);
+      }
 
       if (response.status === 200) { 
         const responseUpload = await response.json();

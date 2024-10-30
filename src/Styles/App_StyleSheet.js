@@ -69,6 +69,7 @@ const App_StyleSheet = StyleSheet.create({
   post_listing_view: {
     marginTop: 10,
     marginBottom: 10,
+    overflow: 'scroll'
   },
   // Used for category selection
   category_list: {

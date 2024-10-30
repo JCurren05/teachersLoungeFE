@@ -42,8 +42,8 @@ function PostListingsView({ navigation }) {
   };
 
   return (
-    <SafeArea>
-      <View style={{ marginBottom: 400 }}>
+    <SafeArea >
+      <View >
         <View
           style={{
             paddingTop: 5,
@@ -72,11 +72,13 @@ function PostListingsView({ navigation }) {
           boxStyles={App_StyleSheet.category_list}
           dropdownStyles={App_StyleSheet.category_list}
           defaultOption={{ key: "0", value: "" }}
+          style={{ overflow: 'scroll' }}
         />
-        <View style={App_StyleSheet.post_listing_view}>
+        <View style={App_StyleSheet.post_listing_view} >
           {posts && (
             <FlatList
-              style={App_StyleSheet.listings}
+
+
               ListEmptyComponent={
                 <Text style={App_StyleSheet.postlist_msg_state}>
                   {"No posts yet!"}
