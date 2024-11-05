@@ -45,6 +45,17 @@ const App_StyleSheet = StyleSheet.create({
     backgroundColor: UI_Colors.cream,
     fontSize: 16,
   },
+  textInput: {
+width: 300,
+marginLeft: 50,
+marginTop: 20,
+marginBottom: 20,
+backgroundColor:  UI_Colors.cream,
+height:50,
+borderWidth: 1,      
+borderColor: 'black', 
+borderStyle: 'solid' 
+  },
   block: {
     height: "50%",
     width: "60%",

@@ -27,6 +27,7 @@ function CreatePostView({ navigation }) {
     }
   }, [isFocused]);
   let [file, setFile] = useState("");
+  const [fileName, setFileName] = useState("");
   const [postContent, setPostContent] = useState("");
   const [selected, setSelected] = useState("");
   const [categories, setCategories] = useState([{ key: "0", value: "" }]);
@@ -61,35 +62,47 @@ function CreatePostView({ navigation }) {
         defaultOption={{ key: "9", value: "Other" }}
       />
       <View style={App_StyleSheet.listings}>
-        <TouchableOpacity
+      <TextInput
+            style={App_StyleSheet.textInput}  // Add styling for the input
+            placeholder="Enter file URI here"
+            value={fileName}
+            onChangeText={(text) => setFileName(text)}  // use state to track input
+          />
+        {/* <TouchableOpacity
           style={App_StyleSheet.medium_button}
           onPress={async () => {
             let file = await selectDoc();
             setFile(file);
           }}
         >
-          <Text style={App_StyleSheet.text}>{"Upload File"}</Text>
-        </TouchableOpacity>
+          <TextInput
+            style={App_StyleSheet.textInput}  // Add styling for the input
+            placeholder="Type here"
+            value={fileName}
+            onChangeText={(text) => setFileName(text)}  // use state to track input
+          />
+
+        </TouchableOpacity> */}
 
         <TouchableOpacity
           style={App_StyleSheet.medium_button}
           onPress={() =>
             route.params?.Community === undefined
               ? CreatePost(
-                  { navigation },
-                  postContent,
-                  file,
-                  route.params.User,
-                  selected
-                )
+                { navigation },
+                postContent,
+                fileName,
+                route.params.User,
+                selected
+              )
               : createCommunityPost(
-                  { navigation },
-                  postContent,
-                  file,
-                  route.params.User,
-                  selected,
-                  route.params?.Community?.id
-                )
+                { navigation },
+                postContent,
+                fileName,
+                route.params.User,
+                selected,
+                route.params?.Community?.id
+              )
           }
         >
           <Text style={App_StyleSheet.text}>{"Submit"}</Text>

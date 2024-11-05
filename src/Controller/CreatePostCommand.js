@@ -15,10 +15,10 @@ async function CreatePost({ navigation }, content, file, user, category) {
       },
       body: JSON.stringify({
         content,
-        filePath: file.url,  // Using filePath as stored in PostgreSQL
+        filePath: file,
         email: user.userUserName,
-        fileType: file.type,
-        fileDisplayName: file.name,
+        fileType: 'None',
+        fileDisplayName: 'File',
         category,
       }),
     };
@@ -28,7 +28,7 @@ async function CreatePost({ navigation }, content, file, user, category) {
       const data = await response.json();
 
       if (response.status === 200) {
-        user.createPost(content, file.url);
+        user.createPost(content, file);
         Alert.alert("Success", "Post created");
         navigation.navigate("Home");
       } else {
