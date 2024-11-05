@@ -50,7 +50,7 @@ function PostModeratorView({ navigation }) {
                   image={item.image}
                   nickName={item.nickName}
                   comments={item.comments}
-                  fileUrl={item.fileUrl}
+                  fileUrl={item.fileurl}
                 />
                 <TouchableOpacity
                   style={App_StyleSheet.moderator_button}

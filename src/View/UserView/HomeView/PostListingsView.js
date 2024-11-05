@@ -33,6 +33,8 @@ function PostListingsView({ navigation }) {
   const [selected, setSelected] = useState("0");
   const loadPosts = async () => {
     const data = await getApprovedPosts(selected);
+    console.log("-------posts------")
+    console.log(data);
     setPosts(data);
   };
   const loadCategories = async () => {
@@ -41,6 +43,10 @@ function PostListingsView({ navigation }) {
     console.log(categories);
   };
 
+
+  useEffect(()=> {
+   
+  }, posts)
   return (
     <SafeArea >
       <View >
@@ -103,7 +109,7 @@ function PostListingsView({ navigation }) {
                     image={item.image}
                     nickName={item.nickName}
                     commentName={route.params.User.userUserName}
-                    fileUrl={item.fileUrl}
+                    fileUrl={item.fileurl}
                     choice={"Home"}
                   />
                   {item.user == route.params.User.userUserName && (

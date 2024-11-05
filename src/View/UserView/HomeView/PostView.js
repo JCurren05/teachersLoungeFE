@@ -47,6 +47,7 @@ function PostView({
     
   });
 
+
   let likeImg = require("../../../../assets/like.png");
   const loadComments = async () => {
     const data = await getCommentsByPostId(post.id);
@@ -66,9 +67,9 @@ function PostView({
         </View>
       </View>
       <Text style={styles.contentText}>{postContent}</Text>
-      {fileUrl != "" && fileUrl != null && (
-        <Text style={styles.linkText} onPress={() => Linking.openURL(fileUrl)}>
-          {"Open Image File"}
+      {post.fileUrl != "" && post.fileUrl != null && (
+        <Text style={styles.linkText} onPress={() => Linking.openURL(post.fileUrl)}>
+          {"Open File"}
         </Text>
       )}
       <View style={styles.comments}>
@@ -101,6 +102,7 @@ function PostView({
           >
             <Image style={styles.like} source={likeImg} />
             <Text>{post.likes}</Text>
+            <Text>{}</Text>
           </TouchableOpacity>
           <TextInput
             style={styles.commentText}

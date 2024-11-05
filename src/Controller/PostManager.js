@@ -42,7 +42,7 @@ async function getApprovedPosts(category) {
           "",
           "",
           [],
-          post.filePath // Adjusted to use filePath retrieved from PostgreSQL
+          post.fileurl // Adjusted to use filePath retrieved from PostgreSQL
         )
       );
     });
