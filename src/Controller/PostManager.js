@@ -35,7 +35,7 @@ async function getApprovedPosts(category) {
     data.forEach((post) => {
       posts.unshift(
         new Post(
-          post.postID,
+          post.postid,
           post.email,
           post.content,
           post.likesCount,
@@ -106,9 +106,11 @@ async function approvePost(postID) {
 
 // Deletes a post from the database
 async function deletePost(postID) {
+  console.log('---------postID---------');
+  console.log(postID);
   const urlDelete = `${apiUrl}${deletePostRoute}`;
   const reqOptions = {
-    method: "POST",
+    method: "DELETE",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${await SecureStore.getItemAsync("token")}`,

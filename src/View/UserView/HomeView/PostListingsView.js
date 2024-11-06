@@ -115,8 +115,10 @@ function PostListingsView({ navigation }) {
                   {item.user == route.params.User.userUserName && (
                     <TouchableOpacity
                       style={App_StyleSheet.small_button}
-                      onPress={() => {
-                        deletePost(item.id, item.fileUrl);
+                      onPress={async () => {
+                        console.log('-------item-------')
+                        console.log(item);
+                        await deletePost(item.id, item.fileUrl);
                         setPosts([]);
                         loadPosts(selected);
                       }}
