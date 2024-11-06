@@ -105,15 +105,34 @@ async function approvePost(postID) {
 }
 
 // Deletes a post from the database
+// async function deletePost(postID) {
+//   const urlDelete = `${apiUrl}${deletePostRoute}`;
+//   const reqOptions = {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${await SecureStore.getItemAsync("token")}`,
+//     },
+//     body: JSON.stringify({ postid: postID }), 
+//   };
+//   const response = await fetch(urlDelete, reqOptions);
+//   const results = await response.json();
+//   if (response.status === 200) {
+//     Alert.alert("Success", results.message);
+//   } else {
+//     Alert.alert("Error", "Server error, try again");
+//   }
+// }
+
 async function deletePost(postID) {
   const urlDelete = `${apiUrl}${deletePostRoute}`;
   const reqOptions = {
-    method: "POST",
+    method: "DELETE",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${await SecureStore.getItemAsync("token")}`,
     },
-    body: JSON.stringify({ id: postID }),
+    body: JSON.stringify({ postid: postID }), 
   };
   const response = await fetch(urlDelete, reqOptions);
   const results = await response.json();
