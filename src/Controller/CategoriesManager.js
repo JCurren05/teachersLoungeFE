@@ -3,7 +3,7 @@ import * as SecureStore from "expo-secure-store";
 
 async function getCategories() {
   let categories = [];
-  let urlCategories = apiUrl + Create PostegoriesRoute;
+  let urlCategories = apiUrl + CreatePostegoriesRoute;
   const reqOptions = {
     method: "GET",
     headers: {

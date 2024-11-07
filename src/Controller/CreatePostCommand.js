@@ -4,6 +4,8 @@ import { Alert } from "react-native";
 
 // Creates a new post and adds it to the database
 async function CreatePost({ navigation }, content, file, user, category) {
+  console.log('------new post--------');
+  console.log(content);
   if (content) {
     const postUrl = `${apiUrl}${createPostRoute}`;
     

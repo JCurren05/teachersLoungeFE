@@ -19,11 +19,18 @@ function JoinCommunityView({ navigation }) {
   }, [isFocused]);
 
   const loadCommunities = async () => {
-    const data = await getAllCommunities();
-    console.log(data);
-    setCommunities(
-      data.map((c) => ({ key: c.communityid.toString(), value: c.communityname }))
-    );
+    try {
+      const data = await getAllCommunities();
+      console.log(data);
+      setCommunities(
+        data.map((c) => ({
+          key: c.id.toString(),  // Use `id` from community object
+          value: c.name          // Use `name` from community object
+        }))
+      );
+    } catch (error) {
+      console.error("Error loading communities:", error);
+    }
   };
 
   return (
@@ -34,7 +41,7 @@ function JoinCommunityView({ navigation }) {
         placeholder="View communities"
         boxStyles={App_StyleSheet.category_list}
         dropdownStyles={App_StyleSheet.category_list}
-        defaultOption={communities[0]}  // Explicitly setting the first option as the default
+        defaultOption={'View communities'}  // Default option with placeholder
       />
       <View style={App_StyleSheet.listings}>
         <TouchableOpacity

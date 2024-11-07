@@ -168,14 +168,14 @@ async function getCommunityPosts(communityID, categoryID) {
     data.forEach((post) => {
       posts.unshift(
         new Post(
-          post.PostID,
-          post.Email,
-          post.Content,
+          post.postid,
+          post.email,
+          post.content,
           post.likesCount,
           "",
           "",
           [],
-          post.filePath  // Using filePath as retrieved from PostgreSQL
+          post.fileurl  // Using filePath as retrieved from PostgreSQL
         )
       );
     });
