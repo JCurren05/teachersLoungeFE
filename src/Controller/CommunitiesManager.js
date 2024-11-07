@@ -28,10 +28,11 @@ async function getAllCommunities() {
   const results = await response.json();
   const data = results.data;
 
+
   if (data) {
     data.forEach((community) => {
       communities.unshift(
-        new Community(community.CommunityID, community.CommunityName)
+        new Community(community.communityid, community.communityname)
       );
     });
   }
@@ -40,6 +41,7 @@ async function getAllCommunities() {
 
 // Creates a new community
 async function createCommunity({ navigation }, name) {
+  console.log(name);
   if (name) {
     const communityUrl = `${apiUrl}${createCommunityRoute}`;
     const reqOptions = {
@@ -123,6 +125,8 @@ async function leaveCommunity({ navigation }, communityId, email) {
 // Gets all communities a user has joined
 async function getUserCommunities(email) {
   const communities = [];
+  console.log('**********email*******');
+  console.log(email);
   const urlCommunities = `${apiUrl}${userCommunitiesRoute}?email=${email}`;
   const reqOptions = {
     method: "GET",
@@ -138,7 +142,7 @@ async function getUserCommunities(email) {
   if (data) {
     data.forEach((community) => {
       communities.unshift(
-        new Community(community.CommunityID, community.CommunityName)
+        new Community(community.communityid, community.communityname)
       );
     });
   }

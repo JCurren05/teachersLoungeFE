@@ -1,37 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-
 import { useRoute, useIsFocused } from "@react-navigation/native";
-import { TextInput } from "react-native-paper";
 import { SelectList } from "react-native-dropdown-select-list";
 import SafeArea from "../../SafeArea";
-import {
-  getAllCommunities,
-  joinCommunity,
-} from "../../../Controller/CommunitiesManager";
+import { getAllCommunities, joinCommunity } from "../../../Controller/CommunitiesManager";
 import App_StyleSheet from "../../../Styles/App_StyleSheet";
 
 function JoinCommunityView({ navigation }) {
   const [communityId, setCommunityId] = useState("");
+  const [communities, setCommunities] = useState([{ key: "0", value: "Select a community" }]);
   const isFocused = useIsFocused();
-  var route = useRoute();
-  React.useEffect(() => {
+  const route = useRoute();
+
+  useEffect(() => {
     if (isFocused) {
       loadCommunities();
     }
   }, [isFocused]);
-  const [communities, setCommunities] = useState([{ key: "0", value: "" }]);
+
   const loadCommunities = async () => {
     const data = await getAllCommunities();
     console.log(data);
-    console.log("---------------");
-    console.log( data.map((c) => {
-      return { ["key"]: c.id, ["value"]: c.name };
-    }));
     setCommunities(
-      data.map((c) => {
-        return { ["key"]: c.id, ["value"]: c.name };
-      })
+      data.map((c) => ({ key: c.communityid.toString(), value: c.communityname }))
     );
   };
 
@@ -43,7 +34,7 @@ function JoinCommunityView({ navigation }) {
         placeholder="View communities"
         boxStyles={App_StyleSheet.category_list}
         dropdownStyles={App_StyleSheet.category_list}
-        defaultOption={{ key: "0", value: "" }}
+        defaultOption={communities[0]}  // Explicitly setting the first option as the default
       />
       <View style={App_StyleSheet.listings}>
         <TouchableOpacity
@@ -62,4 +53,5 @@ function JoinCommunityView({ navigation }) {
     </SafeArea>
   );
 }
+
 export default JoinCommunityView;
