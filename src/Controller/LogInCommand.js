@@ -3,10 +3,10 @@ import User from "../Model/User";
 import * as SecureStore from 'expo-secure-store';
 import { apiUrl, loginRoute } from "@env";
 
-//Logs user into the app based on their email and password
+// Logs user into the app based on their email and password
 async function login({ navigation }, email, password) {
   if (email != "" && password != "") {
-    //URL for server
+    // URL for server
     let urlLogin = apiUrl + loginRoute;
     const reqOptions = {
       method: "POST",
@@ -34,18 +34,24 @@ async function login({ navigation }, email, password) {
           console.log(user);
           // Store token in secure store
           await SecureStore.setItemAsync("token", data.token);
-          //user role assignments
-          if (user.userRole == "Approved" || user.userRole == "Admin" || user.userRole == "Guest"){
+          // User role assignments
+          if (user.userRole == "Approved" || user.userRole == "Admin" || user.userRole == "Guest") {
+            // Show welcome alert with rules when login is successful
+            Alert.alert(
+              "Welcome!",
+              "Teachers' Lounge is a social media app for teachers. Please keep all interactions respectful and professional. This app is meant to foster collaboration and support within the teaching community."
+            );
+
+            // Navigate to the user screen
             navigation.navigate("User", { User: user });
-          }else {
-            //Only approved users can login
+          } else {
+            // Only approved users can login
             Alert.alert("Still awaiting approval to join the app");
           }
         } catch (error) {
           Alert.alert("Couldn't login, please try again");
         }
-          
-       
+
       } else {
         Alert.alert("Login Error: ", data.message);
       }
