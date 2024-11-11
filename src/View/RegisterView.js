@@ -21,6 +21,11 @@ function RegisterView({ navigation, route }) {
   return (
     <View style={App_StyleSheet.register_signIn_background}>
         <View style={App_StyleSheet.block}>
+
+        <Text style={{ color: 'gray', marginBottom: 5 }}>
+        Please use your .edu email address to sign up.
+      </Text>
+      
             <TextInput
                 style={App_StyleSheet.textBlock}
                 placeholder="First Name"
