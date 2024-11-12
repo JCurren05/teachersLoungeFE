@@ -5,6 +5,8 @@ import {
   friendUserRoute,
   unfriendUserRoute,
   getFriendsListRoute,
+  getSentFriendRequestsRoute,
+  getPendingFriendRequestsRoute
 } from "@env";
 import Friend from "../Model/Friend.js";
 import * as SecureStore from "expo-secure-store";
@@ -162,10 +164,84 @@ async function getFriendsList(userEmail) {
   }
 }
 
+
+async function getSentFriendRequests(userEmail) {
+  if (userEmail != "") {
+    var friends = [];
+    let friendsUrl = apiUrl + getSentFriendRequestsRoute + `?userEmail=${userEmail}`;
+    console.log(friendsUrl);
+    const reqOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + (await SecureStore.getItemAsync("token")),
+      },
+    };
+    const response = await fetch(friendsUrl, reqOptions);
+    const results = await response.json();
+    var data = results.data;
+    console.log(data);
+    var count = 0;
+    if (data) {
+      while (data[count] != undefined) {
+        friends.unshift(
+          new Friend(
+            data[count].email,
+            data[count].firstname,
+            data[count].lastname,
+            data[count].schoolid,
+            data[count].role
+          )
+        );
+        count = count + 1;
+      }
+    }
+    return friends;
+  }
+}
+
+
+async function getPendingFriendRequests(userEmail) {
+  if (userEmail != "") {
+    var friends = [];
+    let friendsUrl = apiUrl + getPendingFriendRequestsRoute + `?userEmail=${userEmail}`;
+    console.log(friendsUrl);
+    const reqOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + (await SecureStore.getItemAsync("token")),
+      },
+    };
+    const response = await fetch(friendsUrl, reqOptions);
+    const results = await response.json();
+    var data = results.data;
+    console.log(data);
+    var count = 0;
+    if (data) {
+      while (data[count] != undefined) {
+        friends.unshift(
+          new Friend(
+            data[count].email,
+            data[count].firstname,
+            data[count].lastname,
+            data[count].schoolid,
+            data[count].role
+          )
+        );
+        count = count + 1;
+      }
+    }
+    return friends;
+  }
+}
+
 export {
   getUserInfo,
   checkIfFriended,
   friendUser,
   unfriendUser,
   getFriendsList,
+  getSentFriendRequests,
+  getPendingFriendRequests
 };

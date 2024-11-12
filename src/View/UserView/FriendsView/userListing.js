@@ -24,7 +24,9 @@ function UserListing({ user, onClick }) {
         <View style={App_StyleSheet.user_listings_header}>
           <View style={App_StyleSheet.user_listings_info}>
             <Text style={App_StyleSheet.user_listings_user}>
-              {user.firstName} {user.lastName}
+               {user.isRequestSent ? `${user.firstName} ${user.lastName} - Waiting Approval` : 
+               user.isRequest ? `${user.firstName} ${user.lastName} - Pending Request` : 
+               `${user.firstName} ${user.lastName}`}
             </Text>
           </View>
         </View>

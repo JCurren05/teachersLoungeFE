@@ -64,7 +64,7 @@ function CreatePostView({ navigation }) {
       <View style={App_StyleSheet.listings}>
       <TextInput
             style={App_StyleSheet.textInput}  // Add styling for the input
-            placeholder="Enter file or website URL here"
+            placeholder="Enter website URL here"
             value={fileName}
             onChangeText={(text) => setFileName(text)}  // use state to track input
           />
