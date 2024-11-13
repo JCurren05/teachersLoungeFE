@@ -39,7 +39,7 @@ function ConversationView({ navigation }) {
       // Set up polling interval to refresh messages every 10 seconds
       const intervalId = setInterval(() => {
         loadMessages(route.params.conversationId);
-      }, 3000); // Poll every 10 seconds; adjust to 15000 for 15 seconds if desired
+      }, 1500); // Poll every 10 seconds; adjust to 15000 for 15 seconds if desired
 
       // Cleanup interval when the screen loses focus
       return () => clearInterval(intervalId);
