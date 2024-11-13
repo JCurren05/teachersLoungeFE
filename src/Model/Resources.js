@@ -21,7 +21,6 @@ class Resources {
       new Link("Reading Eggs", "https://readingeggsjunior.com"),
       new Link("Learn with Homer", "https://learnwithhomer.com"),
       new Link("Education.com", "https://www.education.com"),
-      new Link("Jumpstart", "https://www.jumpstart.com/academy/preschool"),
       new Link("Epic!", "https://www.getepic.com"),
       new Link("ABCya", "https://www.abcya.com"),
     ];
@@ -32,6 +31,10 @@ class Resources {
       new Link("Nearpod", "https://nearpod.com/"),
       new Link("TeacherVision", "https://www.teachervision.com/"),
       new Link("Khan Academy", "https://www.khanacademy.org/"),
+      new Link("Kahoot!", "https://www.kahoot.com/"),
+      new Link("Merlot", "https://www.merlot.org/"),
+      new Link("Live Binder", "https://www.livebinders.com/"),
+      new Link("Google Classroom", "https://classroom.google.com/"),
     ];
 
     this.sources3 = [
