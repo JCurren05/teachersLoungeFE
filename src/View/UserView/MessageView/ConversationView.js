@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,29 +6,21 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
-  ScrollView,
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
 import { useRoute, useFocusEffect } from "@react-navigation/native";
-import { TextInput } from "react-native-paper";
 import SafeArea from "../../SafeArea";
-import MessagesNavigator from "./MessagesNavigator";
-import TextBox from "./TextBox";
 import MessageBox from "./MessageBox";
 import { getMessages } from "../../../Controller/DirectMessagesManager";
 import { useHeaderHeight } from "@react-navigation/elements";
+import TextBox from "./TextBox";
 
 function ConversationView({ navigation }) {
   const route = useRoute();
   const [messages, setMessages] = useState([]);
   const image = require("../../../../assets/Account.png");
 
-  useFocusEffect(() => {
-    loadMessages(route.params.conversationId);
-  });
-
-  // Populates messages array
   const loadMessages = async (conversationId) => {
     try {
       const data = await getMessages(conversationId);
@@ -38,7 +30,24 @@ function ConversationView({ navigation }) {
       console.log(error);
     }
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Load messages initially when the screen gains focus
+      loadMessages(route.params.conversationId);
+
+      // Set up polling interval to refresh messages every 10 seconds
+      const intervalId = setInterval(() => {
+        loadMessages(route.params.conversationId);
+      }, 1500); // Poll every 10 seconds; adjust to 15000 for 15 seconds if desired
+
+      // Cleanup interval when the screen loses focus
+      return () => clearInterval(intervalId);
+    }, [route.params.conversationId]) // Dependency to re-run if the conversation changes
+  );
+
   const height = useHeaderHeight();
+
   return (
     <SafeArea
       style={{
@@ -69,16 +78,13 @@ function ConversationView({ navigation }) {
             inverted={true}
           />
         </View>
-        <TextBox navigation={navigation} details={route.params}></TextBox>
+        <TextBox navigation={navigation} details={route.params} />
       </KeyboardAvoidingView>
     </SafeArea>
   );
 }
 
 const styles = StyleSheet.create({
-  bottom: {
-    flex: 3,
-  },
   friendNameHeader: {
     justifyContent: "center",
     alignItems: "center",
@@ -91,7 +97,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     textAlignVertical: "center",
-
     color: "black",
     fontSize: 30,
   },
