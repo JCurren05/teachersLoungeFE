@@ -56,7 +56,7 @@ function ResourcesNavigator({ navigation }) {
         initialParams={route.params}
       />
       <HomeStack.Screen
-        name="Adult Learning\n& Higher Education"
+        name="Adult Learning & Higher Education"
         component={ERAdultLearningAndHigherView}
         initialParams={route.params}
       />
