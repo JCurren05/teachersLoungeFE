@@ -6,60 +6,86 @@ import SafeArea from "../../SafeArea";
 import ProfileNavigator from "./ProfileNavigator";
 import ChangeInfoCommand from "../../../Controller/ChangeInfoCommand";
 
-textContent = "";
+let textContent = ""; // Global variable to store the input text
+
 function EditView({ navigation }) {
-  var route = useRoute();
-  var a = new ChangeInfoCommand(route.params.User);
-  var b = "";
-  if (ProfileNavigator.lastClick == "Edit Name") {
-    b = route.params.User.userName;
-  } else if (ProfileNavigator.lastClick == "Edit Username") {
-    b = route.params.User.userUserName;
-  } else if (ProfileNavigator.lastClick == "Edit School") {
-    b = route.params.User.school;
+  const route = useRoute();
+
+  // Log route params and ProfileNavigator.lastClick to debug
+  console.log("Route params User:", route.params.User);
+  console.log("ProfileNavigator.lastClick:", ProfileNavigator.lastClick);
+
+  // Ensure user object is correctly structured
+  const user = {
+    ...route.params.User,
+    email: route.params.User.userUserName, // Map userUserName to email if email field is missing
+  };
+
+  // Log the updated user object
+  console.log("Updated User Object:", user);
+
+  const changeInfoCommand = new ChangeInfoCommand(user); // Pass updated user object to ChangeInfoCommand
+
+  // Placeholder logic based on ProfileNavigator.lastClick
+  let placeholderText = "";
+  if (ProfileNavigator.lastClick === "Edit Name") {
+    placeholderText = user.userName || ""; // Fallback to empty string if undefined
+  } else if (ProfileNavigator.lastClick === "Edit Username") {
+    placeholderText = user.userUserName || "";
+  } else if (ProfileNavigator.lastClick === "Edit School") {
+    placeholderText = user.school || "";
   }
+
+  // Map lastClick to custom button text
+  const buttonTextMap = {
+    "Edit Name": "Change Name",
+    "Edit Username": "Change Email",
+    "Edit School": "Change School",
+  };
+
+  const buttonText = buttonTextMap[ProfileNavigator.lastClick] || "Change"; // Fallback to "Change" if lastClick is invalid
+
+  // Render the UI
   return (
     <SafeArea>
       <TextInput
-        placeholder={b}
-        onChangeText={(value) => (textContent = value)}
-      />
-      <View
-        style={{
-          paddingTop: 10,
-          paddingBottom: 10,
-          alignItems: "center",
+        placeholder={placeholderText}
+        onChangeText={(value) => {
+          textContent = value; // Update textContent on input
         }}
-      >
+        style={styles.textInput} // Added styles for better appearance
+      />
+      <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.buttonStyle}
           onPress={() => {
-            a.ChangeInfo({ navigation }, textContent);
+            if (!textContent.trim()) {
+              alert("Please enter a valid value."); // Prevent empty submissions
+              return;
+            }
+            changeInfoCommand.ChangeInfo({ navigation }, textContent); // Call ChangeInfo
           }}
         >
-        <Text style={styles.text}>
-            Change {ProfileNavigator.lastClick.substring(5)}
-        </Text>
+          <Text style={styles.text}>{buttonText}</Text>
         </TouchableOpacity>
       </View>
     </SafeArea>
   );
 }
 
+// Styles for the component
 const styles = StyleSheet.create({
-  userInfoStyle: {
-    fontSize: 15,
-    fontWeight: "bold",
+  textInput: {
+    margin: 16,
+    padding: 8,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 4,
+    fontSize: 16,
   },
-  editableInfoStyle: {
-    fontSize: 15,
-    textAlign: "left",
-  },
-  section: {
-    height: 50,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignContent: "center",
+  buttonContainer: {
+    paddingTop: 10,
+    paddingBottom: 10,
     alignItems: "center",
   },
   buttonStyle: {
