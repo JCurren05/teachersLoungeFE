@@ -1,6 +1,7 @@
 import { apiUrl, updateUserInfoRoute } from "@env";
-import AsyncStorage from "@react-native-async-storage/async-storage"; // Ensure this is installed
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import ProfileNavigator from "../View/UserView/ProfileView/ProfileNavigator";
+
 class ChangeInfoCommand {
   user;
 
@@ -25,6 +26,10 @@ class ChangeInfoCommand {
       updateData.firstname = firstname || this.user.firstname;
       updateData.lastname = lastname || this.user.lastname;
     } else if (ProfileNavigator.lastClick === "Edit Username") {
+      if (!content.endsWith(".edu")) {
+        alert("Email must end in .edu");
+        return;
+      }
       updateData.newEmail = content;
     }
 
