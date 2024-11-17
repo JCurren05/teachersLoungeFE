@@ -1,6 +1,6 @@
 import { apiUrl, updateUserInfoRoute } from "@env";
+import AsyncStorage from "@react-native-async-storage/async-storage"; // Ensure this is installed
 import ProfileNavigator from "../View/UserView/ProfileView/ProfileNavigator";
-
 class ChangeInfoCommand {
   user;
 
@@ -48,8 +48,12 @@ class ChangeInfoCommand {
       const data = await response.json();
 
       if (response.ok) {
-        alert("Information updated successfully!");
-        navigation.navigate("Profile");
+        // Clear token and user data to log the user out
+        await AsyncStorage.removeItem("userToken");
+        alert("Information updated successfully! You will now be logged out.");
+        
+        // Navigate to the login screen
+        navigation.navigate("Login");
       } else {
         alert(`Error: ${data.message}`);
       }
