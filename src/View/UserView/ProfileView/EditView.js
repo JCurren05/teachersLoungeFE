@@ -15,8 +15,8 @@ function EditView({ navigation }) {
   const user = {
     ...route.params.User,
     email: route.params.User.userUserName, // Map userUserName to email if email field is missing
+    school : route.params.User.schoolID,
   };
-
   const changeInfoCommand = new ChangeInfoCommand(user);
 
   let placeholderText = "";
@@ -25,10 +25,14 @@ function EditView({ navigation }) {
   } else if (ProfileNavigator.lastClick === "Edit Username") {
     placeholderText = user.userUserName || "";
   }
+  else if (ProfileNavigator.lastClick === "Edit School") {
+    placeholderText = user.school || "";
+  }
 
   const buttonTextMap = {
     "Edit Name": "Change Name",
     "Edit Username": "Change Email",
+    "Edit School" : "Change School",
   };
 
   const buttonText = buttonTextMap[ProfileNavigator.lastClick] || "Change";

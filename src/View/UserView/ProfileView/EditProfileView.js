@@ -25,6 +25,7 @@ function EditProfileView({ navigation }) {
             size={90}
             style={styles.avatarImage}
           />
+          {/* 
           <TouchableOpacity
             style={{
               bottom: 20,
@@ -36,6 +37,7 @@ function EditProfileView({ navigation }) {
           >
             <Text>Edit</Text>
           </TouchableOpacity>
+          */}
         </View>
         <View style={styles.section}>
           <View style={{ flex: 1, justifyContent: "center" }}>
@@ -83,6 +85,7 @@ function EditProfileView({ navigation }) {
             </TouchableOpacity>
           </View>
         </View>
+        {/* 
         <View style={styles.section}>
           <View style={{ flex: 1, justifyContent: "center" }}>
             <Text style={styles.userInfoStyle}>{"\tSchool"}</Text>
@@ -106,6 +109,7 @@ function EditProfileView({ navigation }) {
             </TouchableOpacity>
           </View>
         </View>
+        */}
       </SafeArea>
     </View>
   );
