@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useRoute, useIsFocused } from "@react-navigation/native";
 import { SelectList } from "react-native-dropdown-select-list";
 import SafeArea from "../../SafeArea";
-import { getAllCommunities, joinCommunity } from "../../../Controller/CommunitiesManager";
+import { getAllCommunities, joinCommunity, getUserCommunities } from "../../../Controller/CommunitiesManager";
 import App_StyleSheet from "../../../Styles/App_StyleSheet";
 
 function JoinCommunityView({ navigation }) {
@@ -22,8 +22,18 @@ function JoinCommunityView({ navigation }) {
     try {
       const data = await getAllCommunities();
       console.log(data);
+      const alreadyJoinedCommunities = await getUserCommunities(route.params.User.userUserName);
+      console.log("----Communities----")
+      console.log(data);
+      console.log(alreadyJoinedCommunities)
+      console.log("----Communities End----")
+
+      const filteredData = data.filter(community => 
+        !alreadyJoinedCommunities.some(joined => joined.id === community.id)
+      );
+
       setCommunities(
-        data.map((c) => ({
+        filteredData.map((c) => ({
           key: c.id.toString(),  // Use `id` from community object
           value: c.name          // Use `name` from community object
         }))
