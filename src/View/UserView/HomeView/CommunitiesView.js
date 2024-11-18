@@ -89,9 +89,10 @@ function CommunitiesView({ navigation }) {
             }
             data={communities}
             extraData={communities}
-            renderItem={({ item }) => (
+            renderItem={({ item, index }) => (
               <View style={App_StyleSheet.community_listing_view}>
                 <TouchableOpacity
+                  key={`${item.key}-${index}`} 
                   style={App_StyleSheet.large_button}
                   onPress={() =>
                     navigation.navigate("Community", {
