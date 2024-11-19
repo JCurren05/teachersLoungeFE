@@ -31,6 +31,8 @@ class ChangeInfoCommand {
         return;
       }
       updateData.newEmail = content;
+    } else if (ProfileNavigator.lastClick === "Edit School") {
+      updateData.schoolName = content.trim().toLowerCase(); // Add the school name to updateData
     }
 
     console.log("Payload being sent to backend:", {

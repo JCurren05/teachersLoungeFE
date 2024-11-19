@@ -85,7 +85,7 @@ function EditProfileView({ navigation }) {
             </TouchableOpacity>
           </View>
         </View>
-        {/* 
+        { 
         <View style={styles.section}>
           <View style={{ flex: 1, justifyContent: "center" }}>
             <Text style={styles.userInfoStyle}>{"\tSchool"}</Text>
@@ -109,7 +109,7 @@ function EditProfileView({ navigation }) {
             </TouchableOpacity>
           </View>
         </View>
-        */}
+        }
       </SafeArea>
     </View>
   );

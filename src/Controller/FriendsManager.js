@@ -37,7 +37,7 @@ async function getUserInfo(userEmail) {
           data[0].email,
           data[0].firstname,
           data[0].lastname,
-          data[0].schoolid,
+          data[0].schoolname,
           data[0].role
         );
       }

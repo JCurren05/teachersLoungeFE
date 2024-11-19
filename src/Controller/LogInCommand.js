@@ -26,7 +26,7 @@ async function login({ navigation }, email, password) {
           data.user.Email,
           data.user.FirstName,
           data.user.LastName,
-          data.user.SchoolID,
+          data.user.SchoolName,
           data.user.Role
         );
 

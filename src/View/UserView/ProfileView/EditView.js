@@ -15,24 +15,26 @@ function EditView({ navigation }) {
   const user = {
     ...route.params.User,
     email: route.params.User.userUserName, // Map userUserName to email if email field is missing
-    school : route.params.User.schoolID,
   };
   const changeInfoCommand = new ChangeInfoCommand(user);
+
+  console.log("User Object:", user); // Debugging output to verify user data
+  console.log("Type of school:", typeof user.school); // Debugging output for school type
 
   let placeholderText = "";
   if (ProfileNavigator.lastClick === "Edit Name") {
     placeholderText = user.userName || ""; 
   } else if (ProfileNavigator.lastClick === "Edit Username") {
     placeholderText = user.userUserName || "";
-  }
-  else if (ProfileNavigator.lastClick === "Edit School") {
-    placeholderText = user.school || "";
+  } else if (ProfileNavigator.lastClick === "Edit School") {
+    // Safely convert school to a string or default to an empty string
+    placeholderText = user.school !== undefined && user.school !== null ? String(user.school) : "";
   }
 
   const buttonTextMap = {
     "Edit Name": "Change Name",
     "Edit Username": "Change Email",
-    "Edit School" : "Change School",
+    "Edit School": "Change School",
   };
 
   const buttonText = buttonTextMap[ProfileNavigator.lastClick] || "Change";
@@ -74,6 +76,7 @@ function EditView({ navigation }) {
     </SafeArea>
   );
 }
+
 
 const styles = StyleSheet.create({
   textInput: {
