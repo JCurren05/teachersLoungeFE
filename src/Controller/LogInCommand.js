@@ -26,11 +26,13 @@ async function login({ navigation }, email, password) {
           data.user.Email,
           data.user.FirstName,
           data.user.LastName,
-          data.user.SchoolID,
-          data.user.Role
+          data.user.schoolid,
+          data.user.Role,
+          data.user.color ? data.user.color : 'white'
         );
 
         try {
+          console.log("-------This one-------")
           console.log(user);
           // Store token in secure store
           await SecureStore.setItemAsync("token", data.token);

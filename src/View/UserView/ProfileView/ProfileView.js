@@ -32,7 +32,7 @@ function ProfileView({ navigation }) {
               <Avatar.Image
                 source={route.params.User.image}
                 size={90}
-                style={App_StyleSheet.profile_avatarImage}
+                style={{backgroundColor: route.params.User.color}}
               />
               <Text style={App_StyleSheet.profile_userNameStyle}>
                 {route.params.User.userName}
