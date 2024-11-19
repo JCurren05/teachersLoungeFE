@@ -11,6 +11,7 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { Avatar, Title } from "react-native-paper";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRoute } from "@react-navigation/native";
 import SafeArea from "../../SafeArea";
 import ProfileNavigator from "./ProfileNavigator";
@@ -38,7 +39,17 @@ function EditProfileView({ navigation }) {
     console.log(urlColor);
     const response = await fetch(urlColor, reqOptions);
     const data = await response.json();
-
+    if (response.ok) {
+      // Clear token and user data to log the user out
+      await AsyncStorage.removeItem("userToken");
+      alert("Information updated successfully! You will now be logged out.");
+      
+      // Navigate to the login screen
+      navigation.navigate("Login");
+    } else {
+      alert(`Error: ${data.message}`);
+    }
+  
     console.log(data);
   };
 
