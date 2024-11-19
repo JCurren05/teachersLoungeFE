@@ -134,7 +134,7 @@ function EditProfileView({ navigation }) {
               </Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </View>)}
         { 
         <View style={styles.section}>
           <View style={{ flex: 1, justifyContent: "center" }}>
