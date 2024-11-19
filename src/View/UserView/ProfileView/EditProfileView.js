@@ -47,121 +47,100 @@ function EditProfileView({ navigation }) {
   };
   return (
     <View style={App_StyleSheet.listings}>
-      <SafeArea>
-        <View style={[styles.section, { height: 120 }]}>
-          <Avatar.Image
-            source={route.params.User.image}
-            size={90}
-            style={{ backgroundColor: route.params.User.color }}
-          />
+  <SafeArea>
+    {/* Profile and Color Popup */}
+    <View style={[styles.section, { height: 120 }]}>
+      <Avatar.Image
+        source={route.params.User.image}
+        size={90}
+        style={{ backgroundColor: route.params.User.color }}
+      />
+      <TouchableOpacity
+        style={{
+          bottom: 20,
+          position: "absolute",
+        }}
+        onPress={() => setColorPopupVisible(!isColorPopupVisible)}
+      >
+        <Text>Edit</Text>
+      </TouchableOpacity>
+    </View>
 
-          <TouchableOpacity
-            style={{
-              bottom: 20,
-              position: "absolute",
-            }}
-            onPress={() => {
-              console.log("Edit profile pressed");
-              console.log(route.params.User)
-              setColorPopupVisible(!isColorPopupVisible);;
-            }}
-          >
-            <Text>Edit</Text>
-          </TouchableOpacity>
-          {isColorPopupVisible && (
-            <TouchableWithoutFeedback onPress={closeColorPopup}>
-              <View style={styles.colorPopupContainer}>
-                <View style={styles.colorOptions}>
-                  {['pink', 'yellow', 'red', 'blue', 'green', 'purple', 'orange', 'brown'].map((color) => (
-                    <TouchableOpacity
-                      key={color}
-                      style={[styles.colorCircle, { backgroundColor: color }]}
-                      onPress={() => handleColorSelect(color)}
-                    />
-                  ))}
-                </View>
-              </View>
-            </TouchableWithoutFeedback>
-          )}
-
+    {/* Show the color popup */}
+    {isColorPopupVisible && (
+      <TouchableWithoutFeedback onPress={closeColorPopup}>
+        <View style={styles.colorPopupContainer}>
+          <View style={styles.colorOptions}>
+            {["pink", "yellow", "red", "blue", "green", "purple", "orange", "brown"].map((color) => (
+              <TouchableOpacity
+                key={color}
+                style={[styles.colorCircle, { backgroundColor: color }]}
+                onPress={() => handleColorSelect(color)}
+              />
+            ))}
+          </View>
         </View>
-        {!isColorPopupVisible && (
-          <View style={styles.section}>
-            <View style={{ flex: 1, justifyContent: "center" }}>
-              <Text style={styles.userInfoStyle}>{"\tName"}</Text>
-            </View>
-            <View
-              style={{
-                flex: 1.6,
-                justifyContent: "center",
-                height: 50,
+      </TouchableWithoutFeedback>
+    )}
+
+    {/* Hide sections when popup is visible */}
+    {!isColorPopupVisible && (
+      <>
+        {/* Edit Name Section */}
+        <View style={styles.section}>
+          <View style={{ flex: 1, justifyContent: "center" }}>
+            <Text style={styles.userInfoStyle}>{"\tName"}</Text>
+          </View>
+          <View style={{ flex: 1.6, justifyContent: "center", height: 50 }}>
+            <TouchableOpacity
+              onPress={() => {
+                ProfileNavigator.lastClick = "Edit Name";
+                openEdit.OpenEditableInfo({ navigation });
               }}
             >
-              <TouchableOpacity
-                onPress={() => {
-                  (ProfileNavigator.lastClick = "Edit Name"),
-                    openEdit.OpenEditableInfo({ navigation });
-                }}
-              >
-                <Text style={styles.editableInfoStyle}>
-                  {route.params.User.userName}
-                </Text>
-              </TouchableOpacity>
-            </View>
+              <Text style={styles.editableInfoStyle}>{route.params.User.userName}</Text>
+            </TouchableOpacity>
           </View>
-        )}
+        </View>
 
-        {!isColorPopupVisible && (
-          <View style={styles.section}>
+        {/* Edit Username Section */}
+        <View style={styles.section}>
           <View style={{ flex: 1, justifyContent: "center" }}>
             <Text style={styles.userInfoStyle}>{"\tUsername"}</Text>
           </View>
-          <View
-            style={{
-              flex: 1.6,
-              justifyContent: "center",
-              height: 50,
-            }}
-          >
+          <View style={{ flex: 1.6, justifyContent: "center", height: 50 }}>
             <TouchableOpacity
               onPress={() => {
-                (ProfileNavigator.lastClick = "Edit Username"),
-                  openEdit.OpenEditableInfo({ navigation });
+                ProfileNavigator.lastClick = "Edit Username";
+                openEdit.OpenEditableInfo({ navigation });
               }}
             >
-              <Text style={styles.editableInfoStyle}>
-                {route.params.User.userUserName}
-              </Text>
+              <Text style={styles.editableInfoStyle}>{route.params.User.userUserName}</Text>
             </TouchableOpacity>
           </View>
-        </View>)}
-        { 
+        </View>
+
+        {/* Edit School Section */}
         <View style={styles.section}>
           <View style={{ flex: 1, justifyContent: "center" }}>
             <Text style={styles.userInfoStyle}>{"\tSchool"}</Text>
           </View>
-          <View
-            style={{
-              flex: 1.6,
-              justifyContent: "center",
-              height: 50,
-            }}
-          >
+          <View style={{ flex: 1.6, justifyContent: "center", height: 50 }}>
             <TouchableOpacity
               onPress={() => {
-                (ProfileNavigator.lastClick = "Edit School"),
-                  openEdit.OpenEditableInfo({ navigation });
+                ProfileNavigator.lastClick = "Edit School";
+                openEdit.OpenEditableInfo({ navigation });
               }}
             >
-              <Text style={styles.editableInfoStyle}>
-                {route.params.User.school}
-              </Text>
+              <Text style={styles.editableInfoStyle}>{route.params.User.school}</Text>
             </TouchableOpacity>
           </View>
         </View>
-        }
-      </SafeArea>
-    </View>
+      </>
+    )}
+  </SafeArea>
+</View>
+
   );
 }
 
