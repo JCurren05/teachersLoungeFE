@@ -19,7 +19,7 @@ import {
   addComment,
   getCommentsByPostId,
 } from "../../../Controller/PostManager";
-import { likePost } from "../../../Controller/LikePostCommand";
+import { checkLikedPost, getPostLikes, likePost } from "../../../Controller/LikePostCommand";
 import { Alert } from "react-native";
 
 PostView.buttonPressed = false;
@@ -81,15 +81,28 @@ function PostView({
           <TouchableOpacity
             style={styles.likeContainer}
             onPress={async () => {
-              // Like post
-              const isLiked = await likePost(
-                post,
-                route.params.User.userUserName
-              );
-
+              // Check if post is already liked
+                console.log("check hit");
+                const checkLiked = await checkLikedPost(
+                  post,
+                  route.params.User.userUserName
+                );
+                console.log(checkLiked);
+                if (!checkLiked) {
+                  // Like post
+                  const isLiked = await likePost(
+                    post,
+                    route.params.User.userUserName
+                  );
+                }
+                
               // Increment likes if post is liked
               if (isLiked) {
-                post.likes++;
+                post.likes = await getPostLikes(
+                  post,
+                  route.params.User.userUserName
+                );
+                // post.likes++;
                 if (choice === "Community") {
                   navigation.navigate("Community", {
                     Community: route.params.Community,

@@ -33,12 +33,14 @@ async function getApprovedPosts(category) {
 
   if (data) {
     data.forEach((post) => {
+      const likesCount = 0;
+      if (post.likesCount != null){ likesCount = post.likesCount};
       posts.unshift(
         new Post(
           post.postid,
           post.email,
           post.content,
-          post.likesCount,
+          likesCount,
           "",
           "",
           [],
