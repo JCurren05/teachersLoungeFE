@@ -6,13 +6,16 @@ import {
   FlatList,
   View,
 } from "react-native";
+
 import { useRoute, useIsFocused } from "@react-navigation/native";
 import { SelectList } from "react-native-dropdown-select-list";
 import PostView from "./PostView";
 import SafeArea from "../../SafeArea";
 import {
+  apiUrl,
   getApprovedPosts,
   deletePost,
+  findUserRoute
 } from "../../../Controller/PostManager.js";
 import { getCategories } from "../../../Controller/CategoriesManager";
 import Post from "../../../Model/Posts/Post.js";

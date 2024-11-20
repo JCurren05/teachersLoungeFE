@@ -1,4 +1,8 @@
 import React, { createRef, useEffect, useRef } from "react";
+import {
+  apiUrl,
+  findUserRoute
+} from "@env";
 import { useState, setState } from "react";
 import {
   StyleSheet,
@@ -41,25 +45,44 @@ function PostView({
   const isFocused = useIsFocused();
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
+  const [color, setColor] = useState('white');
+
+  const findUser = async () => {
+    let urlFind = `${apiUrl}${findUserRoute}?email=${encodeURIComponent(userName)}`;
+    const reqOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const response = await fetch(urlFind, reqOptions);
+    const data = await response.json();
+    console.log(setColor(data.data[0].color));
+  }
+  useEffect(() => {
+    const fetch = async() => {
+      await findUser();
+    }
+    fetch();
+  }, [])
 
   useFocusEffect(() => {
     loadComments();
-    
   });
-
 
   let likeImg = require("../../../../assets/like.png");
   const loadComments = async () => {
     const data = await getCommentsByPostId(post.id);
     setComments(data);
   };
+
   return (
     <View style={styles.post}>
       <View style={styles.header}>
         <Avatar.Image
           source={route.params.User.image}
           size={50}
-          style={App_StyleSheet.profile_avatarImage}
+          style={{ backgroundColor: color ? color : 'white' }}
         />
         <View style={styles.info}>
           <Text style={styles.user}>{userName}</Text>
@@ -102,7 +125,7 @@ function PostView({
           >
             <Image style={styles.like} source={likeImg} />
             <Text>{post.likes}</Text>
-            <Text>{}</Text>
+            <Text>{ }</Text>
           </TouchableOpacity>
           <TextInput
             style={styles.commentText}
@@ -120,7 +143,7 @@ function PostView({
           <TouchableOpacity
             style={styles.createPostButton}
             onPress={async () => {
-              
+
               if (comment.trim() != "") {
                 console.log("pressed");
                 // PostView.buttonPressed = true;
