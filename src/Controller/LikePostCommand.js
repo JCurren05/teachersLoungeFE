@@ -70,9 +70,10 @@ async function checkLikedPost(post, user) {
     body: JSON.stringify({ userEmail: user, postId: post.id }),
   };
 
-  console.log(urlCheckLiked);
-
+  console.log(urlCheckLiked); // debug: good
+  // PROBLEM:
   const response = await fetch(urlCheckLiked, reqOptions);
+  // console.log(response); // debug: not reached
   const results = await response.json();
   
   console.log('Response received: ', response);
