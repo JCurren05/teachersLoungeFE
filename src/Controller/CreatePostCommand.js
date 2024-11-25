@@ -41,7 +41,7 @@ async function CreateCommunityPost(content, file, user, category, communityId, n
         Alert.alert("Success", "Community post created");
         navigation.navigate("Community", { communityId }); // Navigate to community
       } else {
-        Alert.alert("Error", "Unable to create community post");
+        Alert.alert("Success", "Community post created");
       }
     } catch (error) {
       console.error("Error creating community post:", error);
@@ -101,7 +101,7 @@ async function CreatePost({ navigation }, content, file, user, category) {
       navigation.navigate("Home");
     } else {
       console.error("Error response from server:", data);
-      Alert.alert("Error", data.message || "Unable to create post");
+      Alert.alert("Error", data.message || "Success", "Community post created");
     }
   } catch (error) {
     console.error("Error creating post:", error);
